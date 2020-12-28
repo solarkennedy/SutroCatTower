@@ -1,0 +1,3 @@
+void setLampBrightness(int brightness) {
+
+}

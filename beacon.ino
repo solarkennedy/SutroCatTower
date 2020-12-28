@@ -1,0 +1,3 @@
+void setBeaconBrightness(int brightness) {
+
+}
