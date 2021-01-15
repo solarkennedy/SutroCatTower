@@ -88,17 +88,21 @@ void sendPushNotification()
   Serial.println("Sending bootup push notification..");
   BearSSL::WiFiClientSecure client;
   client.setInsecure();
+  client.setTimeout(10000);
   HTTPClient http;
-  http.begin(client, "gotify.xkyle.com", 443, "message?token="GOTIFY_TOKEN);
+  http.begin(client, "gotify.xkyle.com", 443, "/message?token=" GOTIFY_TOKEN, true);
   http.addHeader("Content-Type", "application/json");
   uint16_t httpResponseCode;
 
-  httpResponseCode = http.POST("{\"message\": \"Hello from Sutro Cat Tower\",\"title\": \"THETITLE\",\"priority\": 5}");
-  if (httpResponseCode > 0) {
+  httpResponseCode = http.POST("{\"message\": \"Sutro Cat Tower Booted.\",\"title\": \"Sutro Cat Tower Booted\",\"priority\": 1}");
+  if (httpResponseCode > 0)
+  {
     String response = http.getString();
     Serial.println(httpResponseCode);
     Serial.println(response);
-  } else {
+  }
+  else
+  {
     Serial.print("Error on sending POST: ");
     Serial.println(httpResponseCode);
   }
