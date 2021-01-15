@@ -18,6 +18,7 @@ const uint8 PLATFORM_3_LEDS = 14;
 const uint8 PLATFORM_2_LEDS = 34;
 const uint8 PLATFORM_1_LEDS = 22;
 
+
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, LOW);
@@ -25,6 +26,7 @@ void setup() {
   setupStrip();
   setupWifi();
   syncTimeFromWifi();
+  sendPushNotification();
   digitalWrite(LED_BUILTIN, HIGH);
 }
 
