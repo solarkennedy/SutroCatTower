@@ -6,26 +6,23 @@
 #include <ESP8266HTTPClient.h>
 #include "secrets.h"
 
-char ssid[32] = "";
-char password[32] = "";
+#define DEBUG_HTTPCLIENT "true"
 
-void wifiEvents() {
+void wifiEvents()
+{
   ArduinoOTA.handle();
 }
 
-void setupWifi() {
-  loadCredentials();
-
+void setupWifi()
+{
   Serial.println("Booting");
   WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, password);
-  Serial.print("Connecting to: ");
-  Serial.println(ssid);
-  Serial.print("With password: ");
-  Serial.println(password);
-  while (WiFi.waitForConnectResult() != WL_CONNECTED) {
+  WiFi.begin(WIFI_ESSID, WIFI_PASSWORD);
+  while (WiFi.waitForConnectResult() != WL_CONNECTED)
+  {
     Serial.println("Connection Failed! Rebooting...");
-    for (int i = 0; i < 25; i++ ) {
+    for (int i = 0; i < 25; i++)
+    {
       digitalWrite(LED_BUILTIN, HIGH);
       delay(100);
       digitalWrite(LED_BUILTIN, LOW);
@@ -39,9 +36,12 @@ void setupWifi() {
 
   ArduinoOTA.onStart([]() {
     String type;
-    if (ArduinoOTA.getCommand() == U_FLASH) {
+    if (ArduinoOTA.getCommand() == U_FLASH)
+    {
       type = "sketch";
-    } else { // U_SPIFFS
+    }
+    else
+    { // U_SPIFFS
       type = "filesystem";
     }
 
@@ -56,15 +56,24 @@ void setupWifi() {
   });
   ArduinoOTA.onError([](ota_error_t error) {
     Serial.printf("Error[%u]: ", error);
-    if (error == OTA_AUTH_ERROR) {
+    if (error == OTA_AUTH_ERROR)
+    {
       Serial.println("Auth Failed");
-    } else if (error == OTA_BEGIN_ERROR) {
+    }
+    else if (error == OTA_BEGIN_ERROR)
+    {
       Serial.println("Begin Failed");
-    } else if (error == OTA_CONNECT_ERROR) {
+    }
+    else if (error == OTA_CONNECT_ERROR)
+    {
       Serial.println("Connect Failed");
-    } else if (error == OTA_RECEIVE_ERROR) {
+    }
+    else if (error == OTA_RECEIVE_ERROR)
+    {
       Serial.println("Receive Failed");
-    } else if (error == OTA_END_ERROR) {
+    }
+    else if (error == OTA_END_ERROR)
+    {
       Serial.println("End Failed");
     }
   });
@@ -74,24 +83,9 @@ void setupWifi() {
   Serial.println(WiFi.localIP());
 }
 
-void loadCredentials() {
-  EEPROM.begin(512);
-  EEPROM.get(0, ssid);
-  EEPROM.get(0 + sizeof(ssid), password);
-  char ok[2 + 1];
-  EEPROM.get(0 + sizeof(ssid) + sizeof(password), ok);
-  EEPROM.end();
-  if (String(ok) != String("OK")) {
-    ssid[0] = 0;
-    password[0] = 0;
-  }
-  Serial.println("Recovered credentials: ");
-  Serial.print(ssid);
-  Serial.print(" / ");
-  Serial.println(password);
-}
-
-void sendPushNotification() {
+void sendPushNotification()
+{
+  Serial.println("Sending bootup push notification..");
   BearSSL::WiFiClientSecure client;
   client.setInsecure();
   HTTPClient http;
