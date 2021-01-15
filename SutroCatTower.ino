@@ -1,6 +1,6 @@
 #include <FastLED.h>
 
-#define DATA_PIN 0
+#define DATA_PIN 13
 #define NUM_LEDS 100
 #define LED_TYPE WS2812B
 #define COLOR_ORDER RGB
@@ -11,8 +11,12 @@ CRGB leds[NUM_LEDS];
 #define BEACON_HOUR_BEGIN 22
 #define BEACON_HOUR_END 6
 
-const uint8 BEACON_LEDS[] = {0,1};
-const uint8 BEACON_ANTENNA_LEDS[] = {100,101,103};
+const uint8 ANTENNA_LEDS = 1;
+const uint8 SPOT_LEDS = 12;
+const uint8 PLATFORM_4_LEDS = 40;
+const uint8 PLATFORM_3_LEDS = 14;
+const uint8 PLATFORM_2_LEDS = 34;
+const uint8 PLATFORM_1_LEDS = 22;
 
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
