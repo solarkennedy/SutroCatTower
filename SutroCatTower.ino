@@ -16,6 +16,7 @@
 #define NUM_PLATFORM_2_LEDS 34
 #define NUM_PLATFORM_1_LEDS 22
 #define NUM_LEDS (NUM_PLATFORM_1_LEDS + NUM_PLATFORM_2_LEDS + NUM_PLATFORM_3_LEDS + NUM_PLATFORM_4_LEDS + NUM_SPOT_LEDS + NUM_ANTENNA_LEDS) * 3
+#define NUM_LOWER_LEDS (NUM_PLATFORM_1_LEDS + NUM_PLATFORM_2_LEDS + NUM_PLATFORM_3_LEDS) * 3
 CRGB leds[NUM_LEDS];
 
 void setup()
@@ -56,19 +57,19 @@ void figureOutWhatToShow()
   }
 
   // platform 4
-  offset = (NUM_PLATFORM_1_LEDS * 3) + (NUM_PLATFORM_2_LEDS * 3) + (NUM_PLATFORM_3_LEDS * 3) + (NUM_SPOT_LEDS + NUM_ANTENNA_LEDS);
+  offset = NUM_LOWER_LEDS + (NUM_SPOT_LEDS + NUM_ANTENNA_LEDS);
   segment_end = offset + (NUM_PLATFORM_4_LEDS);
   for (int i = offset; i < segment_end; i++)
   {
     leds[i] = CRGB::Green;
   }
-  offset = (NUM_PLATFORM_1_LEDS * 3) + (NUM_PLATFORM_2_LEDS * 3) + (NUM_PLATFORM_3_LEDS * 3) + (NUM_SPOT_LEDS + NUM_ANTENNA_LEDS) + (NUM_PLATFORM_4_LEDS + NUM_SPOT_LEDS + NUM_ANTENNA_LEDS);
+  offset = NUM_LOWER_LEDS + (NUM_SPOT_LEDS + NUM_ANTENNA_LEDS) + (NUM_PLATFORM_4_LEDS + NUM_SPOT_LEDS + NUM_ANTENNA_LEDS);
   segment_end = offset + (NUM_PLATFORM_4_LEDS);
   for (int i = offset; i < segment_end; i++)
   {
     leds[i] = CRGB::Green;
   }
-  offset = (NUM_PLATFORM_1_LEDS * 3) + (NUM_PLATFORM_2_LEDS * 3) + (NUM_PLATFORM_3_LEDS * 3) + (NUM_SPOT_LEDS + NUM_ANTENNA_LEDS) + (NUM_PLATFORM_4_LEDS + NUM_SPOT_LEDS + NUM_ANTENNA_LEDS) + (NUM_PLATFORM_4_LEDS + NUM_SPOT_LEDS + NUM_ANTENNA_LEDS);
+  offset = NUM_LOWER_LEDS + (NUM_SPOT_LEDS + NUM_ANTENNA_LEDS) + (NUM_PLATFORM_4_LEDS + NUM_SPOT_LEDS + NUM_ANTENNA_LEDS) * 2;
   segment_end = offset + (NUM_PLATFORM_4_LEDS);
   for (int i = offset; i < segment_end; i++)
   {
@@ -76,19 +77,19 @@ void figureOutWhatToShow()
   }
 
   // Spots
-  offset = (NUM_PLATFORM_1_LEDS * 3) + (NUM_PLATFORM_2_LEDS * 3) + (NUM_PLATFORM_3_LEDS * 3) + (NUM_ANTENNA_LEDS);
+  offset = NUM_LOWER_LEDS + (NUM_ANTENNA_LEDS);
   segment_end = offset + (NUM_SPOT_LEDS);
   for (int i = offset; i < segment_end; i++)
   {
     leds[i] = CRGB::White;
   }
-  offset = (NUM_PLATFORM_1_LEDS * 3) + (NUM_PLATFORM_2_LEDS * 3) + (NUM_PLATFORM_3_LEDS * 3) + (NUM_ANTENNA_LEDS) + (NUM_PLATFORM_4_LEDS + NUM_SPOT_LEDS + NUM_ANTENNA_LEDS);
+  offset = NUM_LOWER_LEDS + (NUM_ANTENNA_LEDS) + (NUM_PLATFORM_4_LEDS + NUM_SPOT_LEDS + NUM_ANTENNA_LEDS);
   segment_end = offset + (NUM_SPOT_LEDS);
   for (int i = offset; i < segment_end; i++)
   {
     leds[i] = CRGB::White;
   }
-  offset = (NUM_PLATFORM_1_LEDS * 3) + (NUM_PLATFORM_2_LEDS * 3) + (NUM_PLATFORM_3_LEDS * 3) + (NUM_ANTENNA_LEDS) + (NUM_PLATFORM_4_LEDS + NUM_SPOT_LEDS + NUM_ANTENNA_LEDS) + (NUM_PLATFORM_4_LEDS + NUM_SPOT_LEDS + NUM_ANTENNA_LEDS);
+  offset = NUM_LOWER_LEDS + (NUM_ANTENNA_LEDS) + (NUM_PLATFORM_4_LEDS + NUM_SPOT_LEDS + NUM_ANTENNA_LEDS) * 2;
   segment_end = offset + (NUM_SPOT_LEDS);
   for (int i = offset; i < segment_end; i++)
   {
@@ -96,40 +97,24 @@ void figureOutWhatToShow()
   }
 
   // Antenna
-  offset = (NUM_PLATFORM_1_LEDS * 3) + (NUM_PLATFORM_2_LEDS * 3) + (NUM_PLATFORM_3_LEDS * 3);
+  offset = NUM_LOWER_LEDS;
   segment_end = offset + (NUM_ANTENNA_LEDS);
   for (int i = offset; i < segment_end; i++)
   {
     leds[i] = CRGB::Green;
   }
-  offset = (NUM_PLATFORM_1_LEDS * 3) + (NUM_PLATFORM_2_LEDS * 3) + (NUM_PLATFORM_3_LEDS * 3) + (NUM_PLATFORM_4_LEDS + NUM_SPOT_LEDS + NUM_ANTENNA_LEDS);
+  offset = NUM_LOWER_LEDS + (NUM_PLATFORM_4_LEDS + NUM_SPOT_LEDS + NUM_ANTENNA_LEDS);
   segment_end = offset + (NUM_ANTENNA_LEDS);
   for (int i = offset; i < segment_end; i++)
   {
     leds[i] = CRGB::Green;
   }
-  offset = (NUM_PLATFORM_1_LEDS * 3) + (NUM_PLATFORM_2_LEDS * 3) + (NUM_PLATFORM_3_LEDS * 3) + (NUM_PLATFORM_4_LEDS + NUM_SPOT_LEDS + NUM_ANTENNA_LEDS) + (NUM_PLATFORM_4_LEDS + NUM_SPOT_LEDS + NUM_ANTENNA_LEDS);
+  offset = NUM_LOWER_LEDS + (NUM_PLATFORM_4_LEDS + NUM_SPOT_LEDS + NUM_ANTENNA_LEDS) * 2;
   segment_end = offset + (NUM_ANTENNA_LEDS);
   for (int i = offset; i < segment_end; i++)
   {
     leds[i] = CRGB::Green;
   }
-
-  /*
-    if (h >= LAMP_HOUR_BEGIN && h < LAMP_HOUR_END) {
-      setLampBrightness(255);
-    } else {
-      setLampBrightness(0);
-    }
-
-    if (h >= BEACON_HOUR_BEGIN && h <= 24) {
-      setBeaconBrightness(255);
-    } else if (h < BEACON_HOUR_END) {
-      setBeaconBrightness(255);
-    } else {
-      setBeaconBrightness(0);
-    }
-  */
 }
 
 void loop()
