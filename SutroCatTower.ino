@@ -1,23 +1,23 @@
 #include <FastLED.h>
 
 #define DATA_PIN D4
-#define NUM_LEDS 310
 #define LED_TYPE WS2812B
 #define COLOR_ORDER RGB
-CRGB leds[NUM_LEDS];
+
 
 #define LAMP_HOUR_BEGIN 18
 #define LAMP_HOUR_END 22
 #define BEACON_HOUR_BEGIN 22
 #define BEACON_HOUR_END 6
 
-const uint8 ANTENNA_LEDS = 1;
-const uint8 SPOT_LEDS = 12;
-const uint8 PLATFORM_4_LEDS = 40;
-const uint8 PLATFORM_3_LEDS = 14;
-const uint8 PLATFORM_2_LEDS = 34;
-const uint8 PLATFORM_1_LEDS = 22;
-
+#define NUM_ANTENNA_LEDS 1
+#define NUM_SPOT_LEDS 12
+#define NUM_PLATFORM_4_LEDS 40
+#define NUM_PLATFORM_3_LEDS 14
+#define NUM_PLATFORM_2_LEDS 34
+#define NUM_PLATFORM_1_LEDS 22
+#define NUM_LEDS (NUM_PLATFORM_1_LEDS + NUM_PLATFORM_2_LEDS + NUM_PLATFORM_3_LEDS + NUM_PLATFORM_4_LEDS + NUM_SPOT_LEDS + NUM_ANTENNA_LEDS) * 3
+CRGB leds[NUM_LEDS];
 
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
@@ -33,22 +33,22 @@ void setup() {
 void figureOutWhatToShow()
 {
   uint8 h = getHour();
-pacifica_loop();
+  pacifica_loop();
 
-/*
-  if (h >= LAMP_HOUR_BEGIN && h < LAMP_HOUR_END) {
-    setLampBrightness(255);
-  } else {
-    setLampBrightness(0);
-  }
+  /*
+    if (h >= LAMP_HOUR_BEGIN && h < LAMP_HOUR_END) {
+      setLampBrightness(255);
+    } else {
+      setLampBrightness(0);
+    }
 
-  if (h >= BEACON_HOUR_BEGIN && h <= 24) {
-    setBeaconBrightness(255);
-  } else if (h < BEACON_HOUR_END) {
-    setBeaconBrightness(255);
-  } else {
-    setBeaconBrightness(0);
-  }
+    if (h >= BEACON_HOUR_BEGIN && h <= 24) {
+      setBeaconBrightness(255);
+    } else if (h < BEACON_HOUR_END) {
+      setBeaconBrightness(255);
+    } else {
+      setBeaconBrightness(0);
+    }
   */
 }
 
