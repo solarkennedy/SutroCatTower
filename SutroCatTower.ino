@@ -1,7 +1,7 @@
 #include <FastLED.h>
 
-#define DATA_PIN 13
-#define NUM_LEDS 100
+#define DATA_PIN D4
+#define NUM_LEDS 310
 #define LED_TYPE WS2812B
 #define COLOR_ORDER RGB
 CRGB leds[NUM_LEDS];
@@ -33,7 +33,9 @@ void setup() {
 void figureOutWhatToShow()
 {
   uint8 h = getHour();
+pacifica_loop();
 
+/*
   if (h >= LAMP_HOUR_BEGIN && h < LAMP_HOUR_END) {
     setLampBrightness(255);
   } else {
@@ -47,6 +49,7 @@ void figureOutWhatToShow()
   } else {
     setBeaconBrightness(0);
   }
+  */
 }
 
 void loop()  {
