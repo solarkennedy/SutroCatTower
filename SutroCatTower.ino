@@ -2,7 +2,7 @@
 
 #define DATA_PIN D4
 #define LED_TYPE WS2812B
-#define COLOR_ORDER RGB
+#define COLOR_ORDER GRB
 
 
 #define LAMP_HOUR_BEGIN 18
@@ -79,4 +79,6 @@ void setupStrip()
   FastLED.addLeds<LED_TYPE, DATA_PIN, COLOR_ORDER>(leds, NUM_LEDS)
   .setCorrection(TypicalLEDStrip);
   FastLED.setBrightness(255);
+  // Emperically this results in 50 watts from the wall
+  set_max_power_in_milliwatts(57000);
 }
