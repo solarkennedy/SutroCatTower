@@ -32,8 +32,79 @@ void setup() {
 
 void figureOutWhatToShow()
 {
-  uint8 h = getHour();
-  pacifica_loop();
+  int offset, segment_end;
+
+  offset = 0;
+  segment_end = NUM_PLATFORM_1_LEDS * 3;
+  for (int i = offset ; i < segment_end; i++) {
+    leds[i] = CRGB::Khaki;
+  }
+
+  offset = NUM_PLATFORM_1_LEDS * 3;
+  segment_end = offset + (NUM_PLATFORM_2_LEDS * 3);
+  for (int i = offset ; i < segment_end ; i++) {
+    leds[i] = CRGB::Red;
+  }
+
+  offset = (NUM_PLATFORM_1_LEDS * 3) + (NUM_PLATFORM_2_LEDS * 3);
+  segment_end = offset + (NUM_PLATFORM_3_LEDS * 3);
+  for (int i = offset ; i < segment_end ; i++) {
+    leds[i] = CRGB::Blue;
+  }
+
+  // platform 4
+  offset = (NUM_PLATFORM_1_LEDS * 3) + (NUM_PLATFORM_2_LEDS * 3) + (NUM_PLATFORM_3_LEDS * 3) + ( NUM_SPOT_LEDS + NUM_ANTENNA_LEDS);
+  segment_end = offset + (NUM_PLATFORM_4_LEDS);
+  for (int i = offset ; i < segment_end ; i++) {
+    leds[i] = CRGB::Green;
+  }
+  offset = (NUM_PLATFORM_1_LEDS * 3) + (NUM_PLATFORM_2_LEDS * 3) + (NUM_PLATFORM_3_LEDS * 3) + ( NUM_SPOT_LEDS + NUM_ANTENNA_LEDS) + (NUM_PLATFORM_4_LEDS + NUM_SPOT_LEDS + NUM_ANTENNA_LEDS);
+  segment_end = offset + (NUM_PLATFORM_4_LEDS);
+  for (int i = offset ; i < segment_end ; i++) {
+    leds[i] = CRGB::Green;
+  }
+  offset = (NUM_PLATFORM_1_LEDS * 3) + (NUM_PLATFORM_2_LEDS * 3) + (NUM_PLATFORM_3_LEDS * 3) + ( NUM_SPOT_LEDS + NUM_ANTENNA_LEDS) + (NUM_PLATFORM_4_LEDS + NUM_SPOT_LEDS + NUM_ANTENNA_LEDS) + (NUM_PLATFORM_4_LEDS + NUM_SPOT_LEDS + NUM_ANTENNA_LEDS) ;
+  segment_end = offset + (NUM_PLATFORM_4_LEDS);
+  for (int i = offset ; i < segment_end ; i++) {
+    leds[i] = CRGB::Green;
+  }
+
+  // Spots
+  offset = (NUM_PLATFORM_1_LEDS * 3) + (NUM_PLATFORM_2_LEDS * 3) + (NUM_PLATFORM_3_LEDS * 3) + (NUM_ANTENNA_LEDS);
+  segment_end = offset + (NUM_SPOT_LEDS);
+  for (int i = offset ; i < segment_end ; i++) {
+    leds[i] = CRGB::White;
+  }
+  offset = (NUM_PLATFORM_1_LEDS * 3) + (NUM_PLATFORM_2_LEDS * 3) + (NUM_PLATFORM_3_LEDS * 3) + (NUM_ANTENNA_LEDS) + (NUM_PLATFORM_4_LEDS + NUM_SPOT_LEDS + NUM_ANTENNA_LEDS);
+  segment_end = offset + (NUM_SPOT_LEDS);
+  for (int i = offset ; i < segment_end ; i++) {
+    leds[i] = CRGB::White;
+  }
+  offset = (NUM_PLATFORM_1_LEDS * 3) + (NUM_PLATFORM_2_LEDS * 3) + (NUM_PLATFORM_3_LEDS * 3) + (NUM_ANTENNA_LEDS) + (NUM_PLATFORM_4_LEDS + NUM_SPOT_LEDS + NUM_ANTENNA_LEDS) + (NUM_PLATFORM_4_LEDS + NUM_SPOT_LEDS + NUM_ANTENNA_LEDS) ;
+  segment_end = offset + (NUM_SPOT_LEDS);
+  for (int i = offset ; i < segment_end ; i++) {
+    leds[i] = CRGB::White;
+  }
+
+  // Antenna
+  offset = (NUM_PLATFORM_1_LEDS * 3) + (NUM_PLATFORM_2_LEDS * 3) + (NUM_PLATFORM_3_LEDS * 3) ;
+  segment_end = offset + (NUM_ANTENNA_LEDS);
+  for (int i = offset ; i < segment_end ; i++) {
+    leds[i] = CRGB::Green;
+  }
+  offset = (NUM_PLATFORM_1_LEDS * 3) + (NUM_PLATFORM_2_LEDS * 3) + (NUM_PLATFORM_3_LEDS * 3) + (NUM_PLATFORM_4_LEDS + NUM_SPOT_LEDS + NUM_ANTENNA_LEDS);
+  segment_end = offset + (NUM_ANTENNA_LEDS);
+  for (int i = offset ; i < segment_end ; i++) {
+    leds[i] = CRGB::Green;
+  }
+  offset = (NUM_PLATFORM_1_LEDS * 3) + (NUM_PLATFORM_2_LEDS * 3) + (NUM_PLATFORM_3_LEDS * 3) + (NUM_PLATFORM_4_LEDS + NUM_SPOT_LEDS + NUM_ANTENNA_LEDS) + (NUM_PLATFORM_4_LEDS + NUM_SPOT_LEDS + NUM_ANTENNA_LEDS) ;
+  segment_end = offset + (NUM_ANTENNA_LEDS);
+  for (int i = offset ; i < segment_end ; i++) {
+    leds[i] = CRGB::Green;
+  }
+
+
+
 
   /*
     if (h >= LAMP_HOUR_BEGIN && h < LAMP_HOUR_END) {
