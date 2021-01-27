@@ -32,6 +32,8 @@ CRGBPalette16 platform_2_targetPalette;
 CRGBPalette16 platform_3_currentPalette;
 CRGBPalette16 platform_3_targetPalette;
 
+bool KodiIsPlaying;
+
 void setup()
 {
   pinMode(LED_BUILTIN, OUTPUT);
@@ -46,11 +48,11 @@ void setup()
 
 void figureOutWhatToShow()
 {
-  Serial.println("Platform 1");
+  //Serial.println("Platform 1");
   plasma(platform_1_leds, NUM_PLATFORM_1_LEDS * 3, platform_1_currentPalette, platform_1_targetPalette);
-  Serial.println("Platform 2");
+  //Serial.println("Platform 2");
   plasma(platform_2_leds, NUM_PLATFORM_2_LEDS * 3, platform_2_currentPalette, platform_2_targetPalette);
-  Serial.println("Platform 3");
+  //Serial.println("Platform 3");
   plasma(platform_3_leds, NUM_PLATFORM_3_LEDS * 3, platform_3_currentPalette, platform_3_targetPalette);
 
   // for (int i = 0; i < NUM_PLATFORM_4_LEDS * 3; i++)
@@ -76,6 +78,10 @@ void loop()
   {
     syncTimeFromWifi();
   }
+  EVERY_N_SECONDS(5)
+  {
+    KodiIsPlaying = isKodiPlaying();
+  }
 }
 
 void setupSerial()
@@ -89,7 +95,6 @@ void setupSerial()
   Serial.printf("ESP8266 Chip id = %08X\n", ESP.getChipId());
   Serial.printf("Sketch compiled %s\n", compile_date);
 }
-
 
 void setupStrip()
 {
