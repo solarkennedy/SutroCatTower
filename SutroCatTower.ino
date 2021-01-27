@@ -71,17 +71,25 @@ void figureOutWhatToShow()
 
 void loop()
 {
-  figureOutWhatToShow();
-  FastLED.show();
-  wifiEvents();
+  EVERY_N_SECONDS(10)
+  {
+    KodiIsPlaying = isKodiPlaying(KodiIsPlaying);
+  }
+  if (KodiIsPlaying == true) {
+    FastLED.setBrightness(0);
+  } else {
+    FastLED.setBrightness(255);
+  }
+
   EVERY_N_SECONDS(3600)
   {
     syncTimeFromWifi();
   }
-  EVERY_N_SECONDS(5)
-  {
-    KodiIsPlaying = isKodiPlaying();
-  }
+  wifiEvents();
+
+  figureOutWhatToShow();
+  FastLED.show();
+
 }
 
 void setupSerial()
@@ -99,7 +107,7 @@ void setupSerial()
 void setupStrip()
 {
   FastLED.addLeds<LED_TYPE, DATA_PIN, COLOR_ORDER>(leds, NUM_LEDS)
-      .setCorrection(TypicalLEDStrip);
+  .setCorrection(TypicalLEDStrip);
   FastLED.setBrightness(255);
   // Emperically this results in 50 watts from the wall
   set_max_power_in_milliwatts(57000);
