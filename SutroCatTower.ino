@@ -44,29 +44,13 @@ void setup()
   syncTimeFromWifi();
   sendPushNotification();
   digitalWrite(LED_BUILTIN, HIGH);
+  selfTestPattern();
 }
 
 void figureOutWhatToShow()
 {
-  //Serial.println("Platform 1");
-  plasma(platform_1_leds, NUM_PLATFORM_1_LEDS * 3, platform_1_currentPalette, platform_1_targetPalette);
-  //Serial.println("Platform 2");
-  plasma(platform_2_leds, NUM_PLATFORM_2_LEDS * 3, platform_2_currentPalette, platform_2_targetPalette);
-  //Serial.println("Platform 3");
-  plasma(platform_3_leds, NUM_PLATFORM_3_LEDS * 3, platform_3_currentPalette, platform_3_targetPalette);
-
-  // for (int i = 0; i < NUM_PLATFORM_4_LEDS * 3; i++)
-  // {
-  //   leds[platform_4_leds[i]] = CRGB::DarkRed;
-  // }
-  // for (int i = 0; i < NUM_SPOT_LEDS * 3; i++)
-  // {
-  //   leds[spot_leds[i]] = CRGB::Purple;
-  // }
-  // for (int i = 0; i < NUM_ANTENNA_LEDS * 3; i++)
-  // {
-  //   leds[antenna_leds[i]] = CRGB::Orange;
-  // }
+  fillSpotsWith(CRGB::White);
+  fillAntennasWith(CRGB::Green);
 }
 
 void loop()
