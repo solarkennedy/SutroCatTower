@@ -32,7 +32,9 @@ CRGBPalette16 platform_2_targetPalette;
 CRGBPalette16 platform_3_currentPalette;
 CRGBPalette16 platform_3_targetPalette;
 
-bool KodiIsPlaying;
+bool KodiIsPlaying = false;
+int brightness = 0;
+int faderate = 5;
 
 void setup()
 {
@@ -47,33 +49,63 @@ void setup()
   selfTestPattern();
 }
 
-void figureOutWhatToShow()
-{
-  fillSpotsWith(CRGB::White);
-  fillAntennasWith(CRGB::Green);
+int calculateBrightness(int b, int rate) {
+  EVERY_N_MILLISECONDS(200) {
+    b += rate;
+  }
+  if (b < 0) {
+    b = 0;
+  } else if (b > 255) {
+    b = 255;
+  }
+  return b;
 }
 
-void loop()
+void figureOutWhatToShow()
 {
+  int b = beatsin8(4);
+  fillSpotsWith(CRGB::Red, b);
+  fillAntennasWith(CRGB::Green, b);
+  int c = beatsin8(3);
+  fillPlatform4With(CRGB::Purple, c);
+  int d = beatsin8(5);
+  fillPlatform3With(CRGB::Blue, d);
+  int e = beatsin8(6);
+  fillPlatform2With(CRGB::Green, e);
+  int f = beatsin8(4.5);
+  fillPlatform1With(CRGB::White, f);
+}
+
+
+void reactToKodi() {
   EVERY_N_SECONDS(10)
   {
     KodiIsPlaying = isKodiPlaying(KodiIsPlaying);
   }
-  if (KodiIsPlaying == true) {
-    FastLED.setBrightness(0);
-  } else {
-    FastLED.setBrightness(255);
-  }
 
+  if (KodiIsPlaying == true) {
+    faderate = -20;
+  } else {
+    faderate = 10;
+  }
+}
+
+void wifiMaintenance() {
   EVERY_N_SECONDS(3600)
   {
     syncTimeFromWifi();
   }
   wifiEvents();
+}
 
+void loop()
+{
+  reactToKodi();
+  wifiMaintenance();
   figureOutWhatToShow();
   FastLED.show();
-
+  brightness = calculateBrightness(brightness, faderate);
+  FastLED.setBrightness(brightness);
 }
 
 void setupSerial()
