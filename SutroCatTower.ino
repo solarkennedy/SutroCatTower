@@ -61,19 +61,43 @@ int calculateBrightness(int b, int rate) {
   return b;
 }
 
+int getWhiteScaleForHour() {
+  uint8 h = getHour();
+  uint8 wakeup_hour = 8;
+  uint8 night_wakeup_hour = 18;
+
+  if (h >= 0 && h < wakeup_hour) {
+    return 0;
+  } else if (h >= wakeup_hour && h < wakeup_hour + 1) {
+    return map(getMinuteOfTheHour() * 60 + getSecond(), 0, 3600, 0, 255);
+  } else if (h >= wakeup_hour + 1 && h < wakeup_hour + 2) {
+    return 255;
+  } else if (h >= wakeup_hour + 2 && h < wakeup_hour + 3) {
+    return map(getMinuteOfTheHour() * 60 + getSecond(), 0, 3600, 255, 0);
+  } else if (h >= wakeup_hour + 3 && h < night_wakeup_hour) {
+    return 0;
+  } else if (h >= night_wakeup_hour && h < night_wakeup_hour + 1) {
+    return map(getMinuteOfTheHour() * 60 + getSecond(), 0, 3600, 0, 255);
+  } else if (h >= night_wakeup_hour + 1 && h < night_wakeup_hour + 3) {
+    return 255;
+  } else if (h >= night_wakeup_hour + 3 && h < night_wakeup_hour + 4) {
+    return map(getMinuteOfTheHour() * 60 + getSecond(), 0, 3600, 255, 0);
+  } else {
+    return 0;
+  }
+}
+
 void figureOutWhatToShow()
 {
-  int b = beatsin8(4);
+  int b = beatsin8(6);
   fillSpotsWith(CRGB::Red, b);
   fillAntennasWith(CRGB::Green, b);
-  int c = beatsin8(3);
-  fillPlatform4With(CRGB::Purple, c);
-  int d = beatsin8(5);
-  fillPlatform3With(CRGB::Blue, d);
-  int e = beatsin8(6);
-  fillPlatform2With(CRGB::Green, e);
-  int f = beatsin8(4.5);
-  fillPlatform1With(CRGB::White, f);
+  fillPlatform4With(CRGB::Red, b);
+
+  int white_scale = getWhiteScaleForHour();
+  fillPlatform3With(CRGB::FairyLight, white_scale / 8);
+  fillPlatform2With(CRGB::FairyLight, white_scale / 2);
+  fillPlatform1With(CRGB::FairyLight, white_scale);
 }
 
 
@@ -84,9 +108,9 @@ void reactToKodi() {
   }
 
   if (KodiIsPlaying == true) {
-    faderate = -20;
+    faderate = -15;
   } else {
-    faderate = 10;
+    faderate = 8;
   }
 }
 
@@ -134,4 +158,5 @@ void setupStrip()
   setupPlatform4LEDS();
   setupSpotLEDS();
   setupAntennaLEDS();
+  brightness = 0;
 }
