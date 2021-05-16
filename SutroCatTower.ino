@@ -89,15 +89,14 @@ int getWhiteScaleForHour() {
 
 void figureOutWhatToShow()
 {
-  int b = beatsin8(6);
-  fillSpotsWith(CRGB::Red, b);
+  int b = beatsin8(4);
   fillAntennasWith(CRGB::Green, b);
-  fillPlatform4With(CRGB::Red, b);
+  fillSpotsWith(CRGB::Red, b);
 
   int white_scale = getWhiteScaleForHour();
-  fillPlatform3With(CRGB::FairyLight, white_scale / 8);
-  fillPlatform2With(CRGB::FairyLight, white_scale / 2);
-  fillPlatform1With(CRGB::FairyLight, white_scale);
+  fillPlatform3With(CRGB::FairyLight, white_scale / 2);
+  fillPlatform2With(CRGB::FairyLight, white_scale / 4);
+  fillPlatform1With(CRGB::FairyLight, white_scale / 2);
 }
 
 
@@ -127,9 +126,9 @@ void loop()
   reactToKodi();
   wifiMaintenance();
   figureOutWhatToShow();
-  FastLED.show();
   brightness = calculateBrightness(brightness, faderate);
   FastLED.setBrightness(brightness);
+  FastLED.show();
 }
 
 void setupSerial()
