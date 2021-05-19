@@ -4,12 +4,21 @@
 #include <ArduinoOTA.h>
 #include <ESP8266HTTPClient.h>
 #include "secrets.h"
+#include <ArduinoHA.h>
+
+#define ARDUINOHA_DEBUG 1
+
+HADevice device;
+WiFiClient wifiClient;
+HAMqtt mqtt(wifiClient, device);
+HASwitch led("SutroCatTower", false);
 
 #define DEBUG_HTTPCLIENT "true"
 
 void wifiEvents()
 {
   ArduinoOTA.handle();
+  mqtt.loop();
 }
 
 void setupWifi()
@@ -80,6 +89,7 @@ void setupWifi()
   Serial.println("Ready");
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
+  setupMQTT();
 }
 
 void sendPushNotification()
@@ -106,4 +116,13 @@ void sendPushNotification()
     Serial.println(httpResponseCode);
   }
   http.end();
+}
+
+void setupMQTT() {
+  device.setName("SutroCatTower");
+  device.setAvailability(true);
+  byte mac[WL_MAC_ADDR_LENGTH];
+  WiFi.macAddress(mac);
+  device.setUniqueId(mac, sizeof(mac));
+  mqtt.begin(MQTT_HOST);
 }
