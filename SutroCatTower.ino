@@ -33,6 +33,7 @@ CRGBPalette16 platform_3_currentPalette;
 CRGBPalette16 platform_3_targetPalette;
 
 bool KodiIsPlaying = false;
+bool RemoteToggle = true;
 int brightness = 0;
 int faderate = 5;
 
@@ -106,7 +107,7 @@ void reactToKodi() {
     KodiIsPlaying = isKodiPlaying(KodiIsPlaying);
   }
 
-  if (KodiIsPlaying == true) {
+  if (KodiIsPlaying == true || RemoteToggle == false) {
     faderate = -15;
   } else {
     faderate = 8;

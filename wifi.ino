@@ -11,7 +11,7 @@
 HADevice device;
 WiFiClient wifiClient;
 HAMqtt mqtt(wifiClient, device);
-HASwitch led("SutroCatTower", false);
+HALight led("SutroCatTower", false);
 
 #define DEBUG_HTTPCLIENT "true"
 
@@ -124,5 +124,16 @@ void setupMQTT() {
   byte mac[WL_MAC_ADDR_LENGTH];
   WiFi.macAddress(mac);
   device.setUniqueId(mac, sizeof(mac));
+  led.onStateChanged(onSwitchStateChanged);
   mqtt.begin(MQTT_HOST);
+}
+
+void onSwitchStateChanged(bool state)
+{
+    RemoteToggle = state;
+    if (state) {
+        digitalWrite(LED_BUILTIN, LOW);
+    } else {
+        digitalWrite(LED_BUILTIN, HIGH);
+    }
 }
